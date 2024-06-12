@@ -1,4 +1,33 @@
 package algorithms.mazeGenerators;
 
-public class MyMazeGenerator {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+import java.util.Stack;
+
+public class MyMazeGenerator extends AMazeGenerator{
+    @Override
+    public Maze generate(int i, int j) {
+        Maze oneSul = new Maze(i, j);
+        oneSul.setValueAllPos(1);
+        Position start = oneSul.getStartPosition();
+        oneSul.setValueByPos(start, 0);
+        Stack<Position> myS =new Stack<>();
+        myS.push(start);
+        while (!myS.isEmpty()){
+            Position cur = myS.pop();
+            ArrayList<Position> neighbors = oneSul.getMyNeighbors(cur);
+            Collections.shuffle(neighbors, new Random());
+            for(Position pos: neighbors){
+                if(oneSul.ExceptPosToMaze(oneSul.getMyNeighbors(pos))){
+                    //                current position enter to the maze
+                    oneSul.setValueByPos(pos, 0);
+                    myS.push(pos);
+                }
+            }
+
+        }
+        oneSul.chooseEnd();
+        return oneSul;
+    }
 }
