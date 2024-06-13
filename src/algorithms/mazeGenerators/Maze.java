@@ -10,8 +10,8 @@ public class Maze {
     private int[][] mazeMat;
     private Position start;
     private Position end;
-    int rows;
-    int columns;
+    private int rows;
+    private int columns;
 
 
 //    ***Help Functions***
@@ -99,23 +99,38 @@ public class Maze {
         return mazeMat;
     }
 
+    public int getRows() {
+        return rows;
+    }
 
+    public int getColumns() {
+        return columns;
+    }
+
+    public ArrayList<Position> getMyNeighborsInFrame(Position pos){
+        ArrayList<Position> res = getMyNeighbors(pos);
+        return checkInFrame(res);
+    }
     public ArrayList<Position> getMyNeighbors(Position pos){
         Position up = new Position(pos.getRowIndex() - 1, pos.getColumnIndex());
         Position down = new Position(pos.getRowIndex() + 1, pos.getColumnIndex());
         Position left = new Position(pos.getRowIndex(), pos.getColumnIndex() -1 );
         Position right = new Position(pos.getRowIndex(), pos.getColumnIndex() + 1 );
-        ArrayList<Position> toCheck = new ArrayList<>(4);
-        ArrayList<Position> res = new ArrayList<>(4);
+        ArrayList<Position> toCheck = new ArrayList<>();
         toCheck.add(up);
         toCheck.add(down);
         toCheck.add(left);
         toCheck.add(right);
+        return toCheck;
+    }
+
+    public ArrayList<Position> checkInFrame (ArrayList<Position> posToCheck) {
         int i;
-        for (i = 0; i < 4; i++){
-            if (0 <=toCheck.get(i).getRowIndex() && toCheck.get(i).getRowIndex() < rows &&
-                    0 <=toCheck.get(i).getColumnIndex() && toCheck.get(i).getColumnIndex() < columns){
-                res.add(toCheck.get(i));
+        ArrayList<Position> res = new ArrayList<>();
+        for (i = 0; i < posToCheck.size(); i++) {
+            if (0 <= posToCheck.get(i).getRowIndex() && posToCheck.get(i).getRowIndex() < rows &&
+                    0 <= posToCheck.get(i).getColumnIndex() && posToCheck.get(i).getColumnIndex() < columns) {
+                res.add(posToCheck.get(i));
             }
         }
         return res;

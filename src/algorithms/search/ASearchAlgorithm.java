@@ -10,11 +10,11 @@ public class ASearchAlgorithm implements ISearchingAlgorithm{
 
     @Override
     public String getName() {
-        return null;
+        return Name;
     }
 
     @Override
     public int getNumberOfNodesEvaluated() {
-        return 0;
+        return NumOfNodes;
     }
 }

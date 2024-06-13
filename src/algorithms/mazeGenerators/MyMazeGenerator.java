@@ -16,10 +16,10 @@ public class MyMazeGenerator extends AMazeGenerator{
         myS.push(start);
         while (!myS.isEmpty()){
             Position cur = myS.pop();
-            ArrayList<Position> neighbors = oneSul.getMyNeighbors(cur);
+            ArrayList<Position> neighbors = oneSul.getMyNeighborsInFrame(cur);
             Collections.shuffle(neighbors, new Random());
             for(Position pos: neighbors){
-                if(oneSul.ExceptPosToMaze(oneSul.getMyNeighbors(pos))){
+                if(oneSul.ExceptPosToMaze(oneSul.getMyNeighborsInFrame(pos))){
                     //                current position enter to the maze
                     oneSul.setValueByPos(pos, 0);
                     myS.push(pos);

@@ -28,7 +28,9 @@ public class Position {
     }
 
     public int myVal(Maze maze){
-      return maze.getMazeMat()[row][col];
+        if (row>=0 && row < maze.getRows() && col>=0 && col < maze.getColumns())
+            return maze.getMazeMat()[row][col];
+        return -1;
     }
 
 
