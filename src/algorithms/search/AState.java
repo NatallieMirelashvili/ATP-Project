@@ -40,7 +40,7 @@ public class AState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AState otherState = (AState) o;
-        return Objects.equals(State, otherState.State);
+        return State.equals(otherState.getState());
     }
 
     @Override

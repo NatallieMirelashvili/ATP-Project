@@ -29,10 +29,11 @@ public class BestFirstSearch extends BreadthFirstSearch{
                         suc.setCost(suc.getCost() + current.getCost());
                         suc.setCameFrom(current);
                         open.add(suc);
-                    } else if (open.contains(suc)){
-                        if(suc.getCost() - suc.getCameFrom().getCost() + current.getCost() < suc.getCost()){
-                            suc.setCost(suc.getCost() - suc.getCameFrom().getCost() + current.getCost());
-                            suc.setCameFrom(current);
+                    } else {
+                        AState neighborInOpen = findInOpen(suc);
+                        if(neighborInOpen.getCost() - neighborInOpen.getCameFrom().getCost() + current.getCost() < neighborInOpen.getCost()){
+                            neighborInOpen.setCost(suc.getCost() - neighborInOpen.getCameFrom().getCost() + current.getCost());
+                            neighborInOpen.setCameFrom(current);
                         }
                     }
                 }
@@ -42,6 +43,12 @@ public class BestFirstSearch extends BreadthFirstSearch{
         return sol;
     }
 
-
+    private AState findInOpen(AState toFind){
+        for (AState state : open){
+            if (state.equals(toFind))
+                return state;
+        }
+        return null;
+    }
 
 }
