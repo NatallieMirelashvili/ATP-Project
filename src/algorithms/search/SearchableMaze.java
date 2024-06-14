@@ -34,15 +34,24 @@ public class SearchableMaze implements ISearchable{
         Position statePos = parseToPos(state);
         ArrayList<AState> res = new ArrayList<>();
         ArrayList<Position> neighbors = myMaze.getMyNeighborsInFrame(statePos);
-        ArrayList<Position> diagonals =  getDiagonals(state);
-        res.addAll(parsePositionsToStates(neighbors, 10));
-        res.addAll(parsePositionsToStates(diagonals, 15));
+        ArrayList<Position> diagonals =  getDiagonalsInFrame(state);
+        ArrayList<Position> goodNeighbors = getDoors(neighbors);
+        ArrayList<Position> goodDiagonal = getDoors(diagonals);
+        res.addAll(parsePositionsToStates(goodNeighbors, 10));
+        res.addAll(parsePositionsToStates(goodDiagonal, 15));
         return res;
     }
 
 
 //    ***Help Functions***
-
+    private ArrayList<Position> getDoors(ArrayList<Position> optional){
+        ArrayList<Position> passed = new ArrayList<>();
+        for(Position pos: optional){
+            if(pos.myVal(myMaze) == 0)
+                passed.add(pos);
+        }
+        return passed;
+    }
     private ArrayList<AState> parsePositionsToStates(ArrayList<Position> positions, int cost){
         ArrayList<AState> res = new ArrayList<>();
         for(Position pos:positions){
@@ -53,7 +62,7 @@ public class SearchableMaze implements ISearchable{
         return res;
     }
 
-    private ArrayList<Position> getDiagonals(AState state){
+    private ArrayList<Position> getDiagonalsInFrame(AState state){
         ArrayList<Position> res = new ArrayList<>();
         Position statePos = parseToPos(state);
         ArrayList<Position> neighbors = myMaze.getMyNeighbors(statePos); //[up,down,left,right]
@@ -96,21 +105,11 @@ public class SearchableMaze implements ISearchable{
         return new Position(pos[0], pos[1]);
     }
 
-    private int getMyVal(MazeState state){
-        int[][] mazeMat = myMaze.getMazeMat();
-        int[] position = state.parseStateName();
-        return mazeMat[position[0]][position[1]];
-    }
-
-    public boolean isValid(MazeState state){
-        return getMyVal(state) != 1;
-    }
-
-    public boolean isGoal(MazeState state){
-        return state.equals(getGoalState());
-    }
-
-
+//    private int getMyVal(MazeState state){
+//        int[][] mazeMat = myMaze.getMazeMat();
+//        int[] position = state.parseStateName();
+//        return mazeMat[position[0]][position[1]];
+//    }
 
 
 }

@@ -58,20 +58,24 @@ public class Maze {
         int randIDX = rand.nextInt(allPossibleEndPoint.size());
         end = allPossibleEndPoint.get(randIDX);
 //        checking end != start
-        if (start.equals(end)){
-            if (start.getRowIndex() == end.getRowIndex()){
-                if(start.getRowIndex() == rows - 1){
-                    end = new Position(rows - 2, end.getColumnIndex());
-                }
-                end = new Position(end.getRowIndex() + 1, end.getRowIndex());
-            }
-            else{
-                if(start.getColumnIndex() == columns -1){
-                    end = new Position(end.getRowIndex(), columns - 2);
-                }
-                end = new Position(end.getRowIndex(), end.getColumnIndex() + 1);
-            }
+        while (end.equals(start)) {
+            randIDX = rand.nextInt(allPossibleEndPoint.size());
+            end = allPossibleEndPoint.get(randIDX);
         }
+//        if (start.equals(end)){
+//            if (start.getRowIndex() == end.getRowIndex()){
+//                if(start.getRowIndex() == rows - 1){
+//                    end = new Position(rows - 2, end.getColumnIndex());
+//                }
+//                end = new Position(end.getRowIndex() + 1, end.getRowIndex());
+//            }
+//            else{
+//                if(start.getColumnIndex() == columns -1){
+//                    end = new Position(end.getRowIndex(), columns - 2);
+//                }
+//                end = new Position(end.getRowIndex(), end.getColumnIndex() + 1);
+//            }
+//        }
     }
 
 

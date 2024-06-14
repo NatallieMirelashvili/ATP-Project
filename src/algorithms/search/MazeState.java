@@ -14,6 +14,7 @@ public class MazeState extends AState{
         return new int[]{row, col};
     }
 
+
     @Override
     public String toString() {
         return State;
