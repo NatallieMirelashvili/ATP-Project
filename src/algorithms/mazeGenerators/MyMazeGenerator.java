@@ -13,6 +13,7 @@ public class MyMazeGenerator extends AMazeGenerator{
         Position start = oneSul.getStartPosition();
         oneSul.setValueByPos(start, 0);
         Stack<Position> myS =new Stack<>();
+
         myS.push(start);
         while (!myS.isEmpty()){
             Position cur = myS.pop();
