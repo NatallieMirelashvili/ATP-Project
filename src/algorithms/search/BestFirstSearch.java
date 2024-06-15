@@ -14,6 +14,14 @@ public class BestFirstSearch extends BreadthFirstSearch{
     protected void setYourNames(){
         Name = "Best First Search";
     }
+    @Override
+    protected AState closingCircle(AState toFind){
+        for (AState state : open){
+            if (state.equals(toFind))
+                return state;
+        }
+        return null;
+    }
 
     @Override
     protected void dealWithIt(AState closing, AState father){

@@ -55,15 +55,7 @@ public class BreadthFirstSearch extends ASearchAlgorithm{
     }
 
     protected void dealWithIt(AState closing, AState father) {}
-
-
-    private AState closingCircle(AState toFind){
-        for (AState state : open){
-            if (state.equals(toFind))
-                return state;
-        }
-        return null;
-    }
+    protected AState closingCircle(AState toFind){return null;}
 
 
 }

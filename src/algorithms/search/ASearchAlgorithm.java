@@ -29,12 +29,6 @@ public abstract class ASearchAlgorithm implements ISearchingAlgorithm{
 
 
 
-    // Father part in solution
-    @Override
-    public Solution solve(ISearchable domain) {
-        return null;
-    }
-
 
     /***
      * restorePath - A function which restore the solution from the Goal state to the Start state.
