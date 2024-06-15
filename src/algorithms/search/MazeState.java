@@ -1,9 +1,15 @@
 package algorithms.search;
 
 public class MazeState extends AState{
+
+
     public MazeState(String state) {
         super(state);
     }
+    /**
+     * parseStateName - A function which turn this MazeState name to an array of two numbers - left is the row number,
+     * and right is the column number.
+     * */
 
     public int[] parseStateName(){
         String stateName = State;
@@ -14,9 +20,4 @@ public class MazeState extends AState{
         return new int[]{row, col};
     }
 
-
-    @Override
-    public String toString() {
-        return State;
-    }
 }

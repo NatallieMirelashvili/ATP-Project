@@ -10,4 +10,14 @@ abstract public class AMazeGenerator implements IMazeGenerator {
     }
 
 
+    protected boolean checkValidInput(int i, int j){
+        if(i > 0 && j > 0)
+        {
+            return true;
+        }
+        System.out.println("Please enter positive number of rows and columns.\n");
+        return false;
+    }
+
+
 }

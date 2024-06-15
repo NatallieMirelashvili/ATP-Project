@@ -8,12 +8,13 @@ import java.util.Stack;
 public class MyMazeGenerator extends AMazeGenerator{
     @Override
     public Maze generate(int i, int j) {
+        if (!checkValidInput(i, j))
+            return null;
         Maze oneSul = new Maze(i, j);
         oneSul.setValueAllPos(1);
         Position start = oneSul.getStartPosition();
         oneSul.setValueByPos(start, 0);
         Stack<Position> myS =new Stack<>();
-
         myS.push(start);
         while (!myS.isEmpty()){
             Position cur = myS.pop();

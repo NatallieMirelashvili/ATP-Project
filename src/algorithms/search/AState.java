@@ -2,13 +2,17 @@ package algorithms.search;
 
 
 public class AState implements Comparable<AState> {
+
+//    Fields:
     protected String State;
     protected int cost;
     protected AState cameFrom;
 
+//    Constructor:
+
     public AState(String state) {
         State = state;
-    }
+   }
 
 //    Getters:
 
@@ -23,6 +27,8 @@ public class AState implements Comparable<AState> {
     public AState getCameFrom() {
         return cameFrom;
     }
+
+//    Setters:
 
     public void setCost(int cost) {
         this.cost = cost;
@@ -51,5 +57,10 @@ public class AState implements Comparable<AState> {
     @Override
     public int compareTo(AState o) {
         return  Integer.compare(this.cost, o.cost);
+    }
+
+    @Override
+    public String toString() {
+        return State;
     }
 }

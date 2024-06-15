@@ -5,6 +5,9 @@ public class SimpleMazeGenerator extends AMazeGenerator{
 
     @Override
     public Maze generate(int i, int j){
+        if(!checkValidInput(i, j))
+            return null;
+//        using complex maze and add passes randomly.
         AMazeGenerator complexMaze = new MyMazeGenerator();
         Maze simpleMaze = complexMaze.generate(i, j);
         int[][] mazeMat = simpleMaze.getMazeMat();

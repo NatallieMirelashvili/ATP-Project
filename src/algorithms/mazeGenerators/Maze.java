@@ -4,18 +4,42 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Maze {
+
+//    fields:
     private static final String RESET = "\033[0m";
     private static final String GREEN = "\033[0;32m";
     public static final String RED = "\033[0;31m";
-    private int[][] mazeMat;
+    private final int[][] mazeMat;
     private Position start;
     private Position end;
-    private int rows;
-    private int columns;
+    private final int rows;
+    private final int columns;
+
+
+    //   ****Constructors****
+    public Maze(int row, int col) {
+        this.rows = row;
+        this.columns = col;
+        this.mazeMat = new int[row][col];
+        chooseStart();
+        chooseEnd();
+    }
+//  default maze:
+    public Maze(int[][] specificMat){
+        mazeMat = specificMat;
+        rows = specificMat.length;
+        columns = specificMat[0].length;
+        start = new Position(0,0);
+        end = new Position(rows - 1, columns - 1);
+    }
 
 
 //    ***Help Functions***
-
+        /**
+         * FrameTopDownDoors - An help function which help you find all the passes in the top and down frame of the maze
+         * Args: None
+         * return: ArrayList<Position> - positions which located on the frame and demonstrate a pass(filled with 0).
+         * * */
     private ArrayList<Position> FrameTopDownDoors(){
         ArrayList<Position> res = new ArrayList<>();
         for (int j = 0; j < columns; j++){
@@ -27,6 +51,11 @@ public class Maze {
         return res;
     }
 
+    /**
+     * FrameLeftRightDoors - An help function which help you find all the passes on the left and right frame of the maze
+     * Args: None
+     * return: ArrayList<Position> - positions which located in the frame and demonstrate a pass(filled with 0).
+     * * */
     private ArrayList<Position> FrameLeftRightDoors(){
         ArrayList<Position> res = new ArrayList<>();
         for (int i = 0; i < rows; i++){
@@ -38,6 +67,12 @@ public class Maze {
         return res;
     }
 
+    /**
+     * FramePosDoors - An help function which help you find all the passes on the whole frame of the maze
+     * Args: None
+     * return: ArrayList<Position> - positions which located in the frame and demonstrate a pass(filled with 0).
+     * * */
+
     public ArrayList<Position> FramePosDoors(){
         ArrayList<Position> allDoorsInFrame = new ArrayList<>();
         allDoorsInFrame.addAll(FrameTopDownDoors());
@@ -45,12 +80,24 @@ public class Maze {
         return allDoorsInFrame;
     }
 
+    /**
+     * chooseStart - chose a random and valid (on frame and filled with 0) start position.
+     * Args: None
+     * return: None
+     * * */
+
     private void chooseStart(){
         ArrayList<Position> allPossibleStartPoint = FramePosDoors();
         Random rand = new Random();
         int randIDX = rand.nextInt(allPossibleStartPoint.size());
         start = allPossibleStartPoint.get(randIDX);
     }
+
+    /**
+     * chooseEnd - chose a random and valid (on frame, not equal to start position and filled with 0) goal position.
+     * Args: None
+     * return: None
+     * * */
 
     public void chooseEnd(){
         ArrayList<Position> allPossibleEndPoint = FramePosDoors();
@@ -62,32 +109,10 @@ public class Maze {
             randIDX = rand.nextInt(allPossibleEndPoint.size());
             end = allPossibleEndPoint.get(randIDX);
         }
-//        if (start.equals(end)){
-//            if (start.getRowIndex() == end.getRowIndex()){
-//                if(start.getRowIndex() == rows - 1){
-//                    end = new Position(rows - 2, end.getColumnIndex());
-//                }
-//                end = new Position(end.getRowIndex() + 1, end.getRowIndex());
-//            }
-//            else{
-//                if(start.getColumnIndex() == columns -1){
-//                    end = new Position(end.getRowIndex(), columns - 2);
-//                }
-//                end = new Position(end.getRowIndex(), end.getColumnIndex() + 1);
-//            }
-//        }
     }
 
 
 
-//   ****Constructor****
-    public Maze(int row, int col) {
-        this.rows = row;
-        this.columns = col;
-        this.mazeMat = new int[row][col];
-        chooseStart();
-        chooseEnd();
-    }
 
 //    ***Getters****
 
@@ -111,10 +136,10 @@ public class Maze {
         return columns;
     }
 
-    public ArrayList<Position> getMyNeighborsInFrame(Position pos){
-        ArrayList<Position> res = getMyNeighbors(pos);
-        return checkInFrame(res);
-    }
+    /**getMyNeighbors - A function which find all the given position's valid (inside the matrix) neighbors.
+     * Args: Position pos - the position you want to find its neighbors.
+     * return:  ArrayList<Position> - the valid neighbors.
+     * */
     public ArrayList<Position> getMyNeighbors(Position pos){
         Position up = new Position(pos.getRowIndex() - 1, pos.getColumnIndex());
         Position down = new Position(pos.getRowIndex() + 1, pos.getColumnIndex());
@@ -127,6 +152,23 @@ public class Maze {
         toCheck.add(right);
         return toCheck;
     }
+
+    /**
+     * getMyNeighborsInFrame - A function which find the given position neighbors on the frame only.
+     *  Args: Position pos - the position you want to find its neighbors.
+     * return:  ArrayList<Position> - the valid on frame neighbors.
+     * */
+
+    public ArrayList<Position> getMyNeighborsInFrame(Position pos){
+        ArrayList<Position> res = getMyNeighbors(pos);
+        return checkInFrame(res);
+    }
+
+    /**
+     * checkInFrame - A function which filter all the out of frame positions in a given array.
+     *Args: ArrayList<Position> posToCheck - given position array.
+     * returns: ArrayList<Position> in frame (include) positions.
+     * */
 
     public ArrayList<Position> checkInFrame (ArrayList<Position> posToCheck) {
         int i;
@@ -190,7 +232,13 @@ public class Maze {
         System.out.println(out);
     }
 
-
+    /**
+     * ExceptPosToMaze - A function which return if the given position is okay to join to one path solution maze.
+     * If the position has only one neighbor filled with 0 -> it means that this position have only one way reaching to.
+     * So it will join the path.
+     *Args: ArrayList<Position> neighbors - neighbors of the tested position.
+     * returns: boolean: okay to join the path?
+     * */
     public boolean ExceptPosToMaze(ArrayList<Position> neighbors) {
         int counter = 0;
         for (Position neighbor: neighbors){

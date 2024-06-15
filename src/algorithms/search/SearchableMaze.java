@@ -7,13 +7,19 @@ import java.util.ArrayList;
 import algorithms.mazeGenerators.Position;
 
 public class SearchableMaze implements ISearchable{
+
 //    Adapter field - adapt maze being searchable!
-    Maze myMaze;
+    private Maze myMaze;
+    private MazeState startState;
+    private MazeState goalState;
 
 //    ******Contracture******
 
     public SearchableMaze(Maze myMaze) {
         this.myMaze = myMaze;
+        startState = new MazeState(myMaze.getStartPosition().toString());
+        goalState = new MazeState(myMaze.getGoalPosition().toString());
+
     }
 
 
@@ -21,12 +27,12 @@ public class SearchableMaze implements ISearchable{
 //   searchable maze getters
     @Override
     public AState getStartState() {
-        return new MazeState(myMaze.getStartPosition().toString());
+        return startState;
     }
 
     @Override
     public AState getGoalState() {
-        return new MazeState(myMaze.getGoalPosition().toString());
+        return goalState;
     }
 
     @Override
@@ -43,7 +49,29 @@ public class SearchableMaze implements ISearchable{
     }
 
 
-//    ***Help Functions***
+//    Setters:
+
+
+    public void setMyMaze(Maze myMaze) {
+        this.myMaze = myMaze;
+    }
+
+    public void setStartState(MazeState startState) {
+        this.startState = startState;
+    }
+
+    public void setGoalState(MazeState goalState) {
+        this.goalState = goalState;
+    }
+
+
+
+    //    ***Help Functions***
+
+    /**getDoors - A function which filter a positions in the maze which are not passes (filled with 0)
+     * Args: ArrayList<Position> optional - An array of neighbors to filter.
+     *return: ArrayList<Position> - filtered array.
+     * */
     private ArrayList<Position> getDoors(ArrayList<Position> optional){
         ArrayList<Position> passed = new ArrayList<>();
         for(Position pos: optional){
@@ -52,6 +80,13 @@ public class SearchableMaze implements ISearchable{
         }
         return passed;
     }
+
+    /**
+     * parsePositionsToStates - A function which parse a given array of Positions to AState type.
+     *Args: ArrayList<Position> positions - array to parse.
+     *      int cost - the cost it takes to get to these positions from the current position (can be 0).
+     *return -  ArrayList<AState> - Parsed array.
+     * */
     private ArrayList<AState> parsePositionsToStates(ArrayList<Position> positions, int cost){
         ArrayList<AState> res = new ArrayList<>();
         for(Position pos:positions){
@@ -61,6 +96,13 @@ public class SearchableMaze implements ISearchable{
         }
         return res;
     }
+
+
+    /**
+     * getDiagonalsInFrame - A function which find all the valid neighbors of current state which located diagonally to it.
+     * Args: AState state - current state.
+     * return: ArrayList<Position> - Array of current's diagonal neighbors.
+     * */
 
     private ArrayList<Position> getDiagonalsInFrame(AState state){
         ArrayList<Position> res = new ArrayList<>();
@@ -99,17 +141,17 @@ public class SearchableMaze implements ISearchable{
         return res;
     }
 
+    /**
+     * parseToPos - A function which parse asked state to it position performance (place in the maze's matrix)
+     * Args: AState state - the state you want to parse.
+     * return: Position - parsed state.
+     * */
     private Position parseToPos(AState state){
         MazeState ms = new MazeState(state.getState());
         int[] pos = ms.parseStateName();
         return new Position(pos[0], pos[1]);
     }
 
-//    private int getMyVal(MazeState state){
-//        int[][] mazeMat = myMaze.getMazeMat();
-//        int[] position = state.parseStateName();
-//        return mazeMat[position[0]][position[1]];
-//    }
 
 
 }

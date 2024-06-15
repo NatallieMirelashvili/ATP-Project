@@ -5,7 +5,6 @@ import java.util.*;
 public class BreadthFirstSearch extends ASearchAlgorithm{
 
     protected Queue<AState> open;
-    protected AbstractList<AState> close = new ArrayList<>();
 
 //    Constructor:
 
@@ -27,12 +26,12 @@ public class BreadthFirstSearch extends ASearchAlgorithm{
         while (!open.isEmpty()){
             AState current = open.poll();
             NumOfNodes++;
-            close.add(current);
+            close.put(current.toString(), current);
             if(!current.equals(domain.getGoalState()))
             {
                 ArrayList<AState> successors = domain.getAllPossibleStates(current);
                 for (AState suc: successors){
-                    if(close.contains(suc))
+                    if(close.get(suc.toString()) != null)
                         continue;
                     if(!open.contains(suc)){
                         suc.setCost(suc.getCost() + current.getCost());
@@ -47,11 +46,11 @@ public class BreadthFirstSearch extends ASearchAlgorithm{
 
             }
             else {
-                close.add(current);
+                close.put(current.toString(), current);
                 break;
             }
         }
-        sol = restorePath(close.getLast(), start);
+        sol = restorePath(close.get(domain.getGoalState().toString()), start);
         return sol;
     }
 
