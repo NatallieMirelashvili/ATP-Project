@@ -5,10 +5,10 @@ public class Position {
     private int col;
 
     public Position(int row, int col) {
-        if (row < 0 || col < 0){
-            System.out.println("Position expect to positive row and column");
-            return;
-        }
+//        if (row < 0 || col < 0){
+//            System.out.println("Position expect to positive row and column");
+//            return;
+//        }
         this.row = row;
         this.col = col;
     }
