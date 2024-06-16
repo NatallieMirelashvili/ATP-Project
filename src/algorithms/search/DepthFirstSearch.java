@@ -3,7 +3,7 @@ package algorithms.search;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class DepthFirstSearch extends ASearchAlgorithm{
+public class DepthFirstSearch extends ASearchingAlgorithm {
 
     private Stack<AState> open;
 
@@ -18,6 +18,9 @@ public class DepthFirstSearch extends ASearchAlgorithm{
 
     @Override
     public Solution solve(ISearchable domain) {
+        if(!checkSolInput(domain)){
+            return null;
+        }
         Solution sol;
         AState start = domain.getStartState();
         start.setCameFrom(start);
@@ -32,10 +35,9 @@ public class DepthFirstSearch extends ASearchAlgorithm{
                 for (AState suc: successors){
                     if(close.get(suc.toString()) != null)
                         continue;
-                    if(!open.contains(suc)){
-                        suc.setCameFrom(current);
-                        open.push(suc);
-                    }
+                    suc.setCameFrom(current);
+                    open.push(suc);
+
                 }
             }
             else {

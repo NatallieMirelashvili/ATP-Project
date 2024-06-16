@@ -18,7 +18,7 @@ public interface ISearchingAlgorithm {
     /**
      * getNumberOfNodesEvaluated - getter
      * Args: None
-     * return: int - the number of nodes this solution added to the solution.
+     * return: int - the number of nodes this solution evaluated while the search.
      * */
     int getNumberOfNodesEvaluated();
 }

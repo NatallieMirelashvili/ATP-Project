@@ -1,14 +1,10 @@
 package algorithms.mazeGenerators;
 
 public class Position {
-    private int row;
-    private int col;
+    private final int row;
+    private final int col;
 
     public Position(int row, int col) {
-//        if (row < 0 || col < 0){
-//            System.out.println("Position expect to positive row and column");
-//            return;
-//        }
         this.row = row;
         this.col = col;
     }

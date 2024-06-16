@@ -3,6 +3,10 @@ package algorithms.mazeGenerators;
 abstract public class AMazeGenerator implements IMazeGenerator {
 
     public long measureAlgorithmTimeMillis (int i, int j){
+        if(!checkValidInput(i, j)){
+            System.out.println("measureAlgorithmTimeMillis expected positive values, got: " + i + ", " + j + "\n");
+            return -1;
+        }
         long start = System.currentTimeMillis();
         generate(i,j);
         long end = System.currentTimeMillis();
@@ -11,12 +15,7 @@ abstract public class AMazeGenerator implements IMazeGenerator {
 
 
     protected boolean checkValidInput(int i, int j){
-        if(i > 0 && j > 0)
-        {
-            return true;
-        }
-        System.out.println("Please enter positive number of rows and columns.\n");
-        return false;
+        return i > 0 && j > 0;
     }
 
 

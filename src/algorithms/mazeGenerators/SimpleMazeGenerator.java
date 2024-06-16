@@ -5,8 +5,10 @@ public class SimpleMazeGenerator extends AMazeGenerator{
 
     @Override
     public Maze generate(int i, int j){
-        if(!checkValidInput(i, j))
+        if(!checkValidInput(i, j)){
+            System.out.println("generate maze function expected positive values, got: " + i + ", " +  j + "\n");
             return null;
+        }
 //        using complex maze and add passes randomly.
         AMazeGenerator complexMaze = new MyMazeGenerator();
         Maze simpleMaze = complexMaze.generate(i, j);

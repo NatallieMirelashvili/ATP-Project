@@ -8,8 +8,10 @@ import java.util.Stack;
 public class MyMazeGenerator extends AMazeGenerator{
     @Override
     public Maze generate(int i, int j) {
-        if (!checkValidInput(i, j))
+        if (!checkValidInput(i, j)){
+            System.out.println("generate maze function expected positive values, got: " + i + ", " +  j + "\n");
             return null;
+        }
         Maze oneSul = new Maze(i, j);
         oneSul.setValueAllPos(1);
         Position start = oneSul.getStartPosition();
@@ -22,7 +24,7 @@ public class MyMazeGenerator extends AMazeGenerator{
             Collections.shuffle(neighbors, new Random());
             for(Position pos: neighbors){
                 if(oneSul.ExceptPosToMaze(oneSul.getMyNeighborsInFrame(pos))){
-                    //                current position enter to the maze
+                    //  current position enter to the maze
                     oneSul.setValueByPos(pos, 0);
                     myS.push(pos);
                 }

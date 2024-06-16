@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public abstract class ASearchAlgorithm implements ISearchingAlgorithm{
+public abstract class ASearchingAlgorithm implements ISearchingAlgorithm{
 //    Fields:
     protected String Name;
     protected int NumOfNodes;
@@ -11,7 +11,7 @@ public abstract class ASearchAlgorithm implements ISearchingAlgorithm{
 
 
     //    Constructor:
-    public ASearchAlgorithm(){
+    public ASearchingAlgorithm(){
         setYourNames();
         close = new HashMap<>();
     }
@@ -28,7 +28,13 @@ public abstract class ASearchAlgorithm implements ISearchingAlgorithm{
     }
 
 
-
+    protected boolean checkSolInput(ISearchable searchable){
+        if(searchable == null || searchable.getGoalState() == null || searchable.getStartState() == null){
+            System.out.println("solve function expected to not null searchable input update with start and goal state\n");
+            return false;
+        }
+        return true;
+    }
 
     /***
      * restorePath - A function which restore the solution from the Goal state to the Start state.

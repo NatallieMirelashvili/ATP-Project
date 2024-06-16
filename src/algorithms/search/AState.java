@@ -11,6 +11,11 @@ public class AState implements Comparable<AState> {
 //    Constructor:
 
     public AState(String state) {
+        if(state.equals(""))
+        {
+            System.out.println("AState expected to not empty string input\n");
+            return;
+        }
         State = state;
    }
 

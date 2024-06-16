@@ -9,15 +9,20 @@ public class Maze {
     private static final String RESET = "\033[0m";
     private static final String GREEN = "\033[0;32m";
     public static final String RED = "\033[0;31m";
-    private final int[][] mazeMat;
+    private int[][] mazeMat;
     private Position start;
     private Position end;
-    private final int rows;
-    private final int columns;
+    private int rows;
+    private int columns;
 
 
     //   ****Constructors****
     public Maze(int row, int col) {
+        if(row < 0 || col < 0)
+        {
+            System.out.println("Maze constructor expected a positive value, got " + row + ", " +  col + "\n");
+            return;
+        }
         this.rows = row;
         this.columns = col;
         this.mazeMat = new int[row][col];
@@ -26,6 +31,11 @@ public class Maze {
     }
 //  default maze:
     public Maze(int[][] specificMat){
+        if(specificMat == null)
+        {
+            System.out.println("Maze default constructor expected not null argument\n");
+            return;
+        }
         mazeMat = specificMat;
         rows = specificMat.length;
         columns = specificMat[0].length;
@@ -141,6 +151,10 @@ public class Maze {
      * return:  ArrayList<Position> - the valid neighbors.
      * */
     public ArrayList<Position> getMyNeighbors(Position pos){
+        if(pos == null){
+            System.out.println("getMyNeighbors expected to not null input\n");
+            return null;
+        }
         Position up = new Position(pos.getRowIndex() - 1, pos.getColumnIndex());
         Position down = new Position(pos.getRowIndex() + 1, pos.getColumnIndex());
         Position left = new Position(pos.getRowIndex(), pos.getColumnIndex() -1 );
@@ -160,6 +174,10 @@ public class Maze {
      * */
 
     public ArrayList<Position> getMyNeighborsInFrame(Position pos){
+        if(pos == null){
+            System.out.println("getMyNeighborsInFrame expected to not null input\n");
+            return null;
+        }
         ArrayList<Position> res = getMyNeighbors(pos);
         return checkInFrame(res);
     }
@@ -171,6 +189,10 @@ public class Maze {
      * */
 
     public ArrayList<Position> checkInFrame (ArrayList<Position> posToCheck) {
+        if(posToCheck == null){
+            System.out.println("checkInFrame expected to not null input\n");
+            return null;
+        }
         int i;
         ArrayList<Position> res = new ArrayList<>();
         for (i = 0; i < posToCheck.size(); i++) {
@@ -206,16 +228,16 @@ public class Maze {
             for (j = 0 ; j < columns; j ++){
                 if(start.getRowIndex() == i && start.getColumnIndex() == j){
                     if (j != columns -1 )
-                        out.append(GREEN + "S" + RESET).append(",");
+                        out.append(RED + "S" + RESET).append(",");
                     else{
-                    out.append(GREEN + "S" + RESET);
+                    out.append(RED + "S" + RESET);
                     }
                 }
                 else if(end.getRowIndex() == i && end.getColumnIndex() == j ){
                     if (j != columns -1 )
-                        out.append(RED + "E" + RESET).append(",");
+                        out.append(GREEN + "E" + RESET).append(",");
                     else {
-                        out.append(RED + "E" + RESET);
+                        out.append(GREEN + "E" + RESET);
                     }
                 }
                 else {

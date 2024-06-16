@@ -16,8 +16,23 @@ public class SearchableMaze implements ISearchable{
 //    ******Contracture******
 
     public SearchableMaze(Maze myMaze) {
+        if(myMaze == null || myMaze.getMazeMat() == null)
+        {
+            System.out.println("SearchableMaze constructor expected to not null maze input and maze with proper matrix\n");
+            return;
+        }
         this.myMaze = myMaze;
+        if(myMaze.getStartPosition() == null)
+        {
+            System.out.println("SearchableMaze constructor expected to not null start point of the maze\n");
+            return;
+        }
         startState = new MazeState(myMaze.getStartPosition().toString());
+        if(myMaze.getGoalPosition() == null)
+        {
+            System.out.println("SearchableMaze constructor expected to not null goal point of the maze\n");
+            return;
+        }
         goalState = new MazeState(myMaze.getGoalPosition().toString());
 
     }
@@ -37,6 +52,10 @@ public class SearchableMaze implements ISearchable{
 
     @Override
     public ArrayList<AState> getAllPossibleStates(AState state) {
+        if(state == null){
+            System.out.println("getAllPossibleStates expected to not null input\n");
+            return null;
+        }
         Position statePos = parseToPos(state);
         ArrayList<AState> res = new ArrayList<>();
         ArrayList<Position> neighbors = myMaze.getMyNeighborsInFrame(statePos);
@@ -47,23 +66,6 @@ public class SearchableMaze implements ISearchable{
         res.addAll(parsePositionsToStates(goodDiagonal, 15));
         return res;
     }
-
-
-//    Setters:
-
-
-    public void setMyMaze(Maze myMaze) {
-        this.myMaze = myMaze;
-    }
-
-    public void setStartState(MazeState startState) {
-        this.startState = startState;
-    }
-
-    public void setGoalState(MazeState goalState) {
-        this.goalState = goalState;
-    }
-
 
 
     //    ***Help Functions***

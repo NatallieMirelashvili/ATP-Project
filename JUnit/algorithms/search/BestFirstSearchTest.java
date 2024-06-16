@@ -1,6 +1,6 @@
 package algorithms.search;
 
-import algorithms.mazeGenerators.Maze;
+import algorithms.mazeGenerators.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +24,29 @@ class BestFirstSearchTest {
     public void checkBestName(){
         Assertions.assertEquals(bestToTest.getName(), "Best First Search");
         Assertions.assertNotEquals(bestToTest.getName(), "Breath First Search" );
+    }
+    @Test
+    public void nullChecks(){
+        AMazeGenerator simpleNull = new SimpleMazeGenerator();
+        AMazeGenerator emptyNull = new EmptyMazeGenerator();
+        AMazeGenerator complexNull = new MyMazeGenerator();
+        Assertions.assertEquals(-1, simpleNull.measureAlgorithmTimeMillis(-5, -5));
+        Assertions.assertNull(simpleNull.generate(-5, -5), "Expected to be null");
+        Assertions.assertNull(emptyNull.generate(-5, -5), "Expected to be null");
+        Assertions.assertNull(complexNull.generate(-5, -5), "Expected to be null");
+        Maze wrongInput = new Maze(-5, -5);
+        Assertions.assertNull(wrongInput.getMazeMat(), "Expected to be null");
+        MazeState nullState = new MazeState("");
+        Assertions.assertNull(nullState.State, "Expected to be null");
+        ISearchable searchMazeNull = new SearchableMaze(wrongInput);
+        Assertions.assertNull(searchMazeNull.getStartState(), "Expected to be null");
+        Assertions.assertNull(bestToTest.solve(searchMazeNull), "Expected to be null");
+        ISearchable nullS = new SearchableMaze(null);
+        Assertions.assertNull(nullS.getStartState(), "Expected to be null");
+        Assertions.assertNull(bestToTest.solve(nullS), "Expected to be null");
+
+
+
     }
 
     @Test
