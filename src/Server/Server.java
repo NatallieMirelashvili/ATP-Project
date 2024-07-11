@@ -9,8 +9,8 @@ import java.util.concurrent.Executors;
 public class Server {
     private int port;
     private int listeningIntervalMS;
-    IServerStrategy strategy;
-    boolean stop;
+    private IServerStrategy strategy;
+    private boolean stop;
     private ExecutorService threadPool;
 
     public Server(int port, int listeningIntervalMS, IServerStrategy strategy) {
@@ -29,7 +29,6 @@ public class Server {
     public void start(){
         try {
             //Create new ServerSocket:
-            System.out.println("Server");
             ServerSocket serverSocket = new ServerSocket(port);
             serverSocket.setSoTimeout(listeningIntervalMS);
             // handle client:
@@ -37,7 +36,6 @@ public class Server {
             // Server won't wait!
             while (!stop) {
                 try {
-                    System.out.println("Search for client");
 //                    Trying to serve client:
                     Socket clientSocket = serverSocket.accept();
                     // Insert the new task into the thread pool:
@@ -57,7 +55,7 @@ public class Server {
 //            ShutDown threadPool without stopping any interrupts or killing running threads
             threadPool.shutdown();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -70,7 +68,7 @@ public class Server {
             strategy.serverStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
             clientSocket.close();
         } catch (IOException e){
-            System.out.println(e.getMessage());;
+            e.printStackTrace();
         }
     }
 
