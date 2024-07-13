@@ -23,6 +23,7 @@ public class Client {
     public void communicateWithServer(){
 //        Trying to connect Server by IP & Port
         try(Socket serverSocket = new Socket(serverIP, serverPort)){
+            // ***Maybe swap input serverSocket with output serverSocket***
             strategy.clientStrategy(serverSocket.getInputStream(), serverSocket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
