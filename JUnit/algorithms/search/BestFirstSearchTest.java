@@ -4,6 +4,8 @@ import algorithms.mazeGenerators.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.assertNull;
+
 class BestFirstSearchTest {
     private final BestFirstSearch bestToTest = new BestFirstSearch();
 //    155
@@ -50,6 +52,12 @@ class BestFirstSearchTest {
     }
 
     @Test
+    public void tesInputValidity(){
+        Assertions.assertNull((bestToTest.solve(null)));
+        Assertions.assertEquals(bestToTest.solve(new SearchableMaze(new Maze(-1,-3)), "can't build maze with negative values.\n");
+
+    }
+    @Test
     public void testCorrectCalcSol(){
         ISearchable maze = new SearchableMaze(mazeToTestOn);
 //        Running best solution:
@@ -59,6 +67,7 @@ class BestFirstSearchTest {
         Assertions.assertEquals( 0, sol.getSolutionPath().get(0).getCost());
         Assertions.assertEquals(maze.getStartState().toString(), sol.getSolutionPath().get(0).getCameFrom().toString());
         Assertions.assertEquals(150,sol.getSolutionPath().get(sol.getSolutionPath().size() - 1 ).getCost());
+
     }
 
 

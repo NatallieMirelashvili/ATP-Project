@@ -43,6 +43,11 @@ public class Maze {
         end = new Position(rows - 1, columns - 1);
     }
 
+    //maze from decode:
+    //public maze(byte[]byteMaze) {
+    //TODO:build maze like format->
+    //}
+
 
 //    ***Help Functions***
         /**
@@ -270,4 +275,9 @@ public class Maze {
         }
         return counter == 1;
     }
+
+    //public byte[] toByteArray(){
+    //TODO:decode
+    //return ;
+    //}
 }
