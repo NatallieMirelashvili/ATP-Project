@@ -1,4 +1,6 @@
 package algorithms.mazeGenerators;
+
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -36,17 +38,27 @@ public class Maze {
             System.out.println("Maze default constructor expected not null argument\n");
             return;
         }
-        mazeMat = specificMat;
-        rows = specificMat.length;
-        columns = specificMat[0].length;
-        start = new Position(0,0);
-        end = new Position(rows - 1, columns - 1);
+        this.mazeMat = specificMat;
+        this.rows = specificMat.length;
+        this.columns = specificMat[0].length;
+        this.start = new Position(0,0);
+        this.end = new Position(rows - 1, columns - 1);
     }
 
-    //maze from decode:
-    //public maze(byte[]byteMaze) {
-    //TODO:build maze like format->
-    //}
+    public Maze(byte[] byteMaze) {
+        // constructor for creating a maze from compressed byte array
+        ByteBuffer buffer = ByteBuffer.wrap(byteMaze);
+        this.rows = buffer.getInt();
+        this.columns = buffer.getInt();
+        this.start = new Position(buffer.getInt(), buffer.getInt());
+        this.end = new Position(buffer.getInt(), buffer.getInt());
+        this.mazeMat = new int[rows][columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                this.mazeMat[i][j] = buffer.get();
+            }
+        }
+    }
 
 
 //    ***Help Functions***
@@ -276,8 +288,23 @@ public class Maze {
         return counter == 1;
     }
 
-    //public byte[] toByteArray(){
-    //TODO:decode
-    //return ;
-    //}
+    public byte[] toByteArray(){
+        ByteBuffer buffer = ByteBuffer.allocate(24+(rows*columns));
+        // add the size of maze
+        buffer.putInt(rows);
+        buffer.putInt(columns);
+        //add start position
+        buffer.putInt(start.getRowIndex());
+        buffer.putInt(start.getColumnIndex());
+        //add end position
+        buffer.putInt(end.getRowIndex());
+        buffer.putInt(end.getColumnIndex());
+        //add the values of maze
+        for (int i=0; i<rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                buffer.put((byte) mazeMat[i][j]);
+            }
+        }
+        return buffer.array();
+    }
 }
