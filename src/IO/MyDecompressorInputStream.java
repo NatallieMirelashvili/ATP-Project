@@ -18,13 +18,19 @@ public class MyDecompressorInputStream extends InputStream {
     @Override
     public int read(byte[] b) throws IOException {
         int index = 0;
-        while (index < b.length) {
-            byte value = (byte) in.read();
-            byte count = (byte) in.read();
+        int value = 0;
+        while (index < b.length && (value = in.read()) != -1) {
+            int count = in.read();
+            if (count == -1) {
+                throw new IOException("Unexpected end of stream");
+            }
             for (int i = 0; i < count; i++) {
-                b[index++] = value;
+                if (index >= b.length) {
+                    return index; // Return the number of bytes actually read
+                }
+                b[index++] = (byte) value;
             }
         }
-        return b.length;
+        return (index == 0 && value == -1) ? -1 : index;
     }
 }
